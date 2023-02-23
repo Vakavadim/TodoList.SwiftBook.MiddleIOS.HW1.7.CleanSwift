@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="LoginViewController" customModule="TodoList_SwiftBook_MiddleIOS_HW1_7_CleanSwift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cCr-gd-0mW">
+                                <rect key="frame" x="16" y="296.66666666666669" width="361" height="84"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nhj-hf-rCO">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qhd-iF-9va">
+                                        <rect key="frame" x="0.0" y="50" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSX-H9-Dat">
+                                <rect key="frame" x="163.66666666666666" y="412.66666666666669" width="65.666666666666657" height="34.333333333333314"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Login">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" systemColor="tintColor"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="loginButtonPress:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Wme-Cd-WUv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="cCr-gd-0mW" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" constant="-100" id="8Ma-8q-iaA"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="cCr-gd-0mW" secondAttribute="trailing" constant="16" id="9hC-29-EKH"/>
+                            <constraint firstItem="cCr-gd-0mW" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="MST-Tb-aHz"/>
+                            <constraint firstItem="lSX-H9-Dat" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="NVN-RZ-au2"/>
+                            <constraint firstItem="lSX-H9-Dat" firstAttribute="top" secondItem="cCr-gd-0mW" secondAttribute="bottom" constant="32" id="XIU-HF-knD"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textFieldLogin" destination="nhj-hf-rCO" id="4rR-We-uuK"/>
+                        <outlet property="textFieldPass" destination="Qhd-iF-9va" id="0fc-mb-2yl"/>
+                        <segue destination="uyK-hF-Zck" kind="presentation" identifier="TodoList" modalPresentationStyle="fullScreen" id="lZu-aR-dIa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-34" y="4"/>
+        </scene>
+        <!--TodoListViewController-->
+        <scene sceneID="Qik-eZ-F1o">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="TodoListViewController" storyboardName="TodoListViewController" referencedIdentifier="TodoListViewController" id="uyK-hF-Zck" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="OAs-Mj-y7j"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BK6-Z5-EgL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="740" y="4"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
