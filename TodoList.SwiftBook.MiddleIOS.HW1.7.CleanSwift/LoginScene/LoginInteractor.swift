@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LoginDataStore {
+protocol ILoginDataStore {
 	var login: String? { get set }
 }
 
@@ -16,7 +16,7 @@ protocol ILoginInteractor {
 	func login(request: LoginModels.Model.Request)
 }
 
-class LoginInteractor: ILoginInteractor, LoginDataStore {
+class LoginInteractor: ILoginInteractor, ILoginDataStore {
 	var login: String?
 	
 	private var worker: ILoginWorker

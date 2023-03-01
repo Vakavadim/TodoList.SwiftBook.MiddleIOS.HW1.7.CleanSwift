@@ -13,12 +13,12 @@ protocol ITodoListRouter {
 }
 
 protocol ITodoListDataPassing {
-	var dataStore: TodoListDataStore? { get }
+	var dataStore: ITodoListDataStore? { get }
 }
 
 class TodoListRouter: NSObject, ITodoListRouter, ITodoListDataPassing {
 	
-	var dataStore: TodoListDataStore?
+	var dataStore: ITodoListDataStore?
 	weak var viewController: TodoListViewController?
 	
 	// MARK: Routing

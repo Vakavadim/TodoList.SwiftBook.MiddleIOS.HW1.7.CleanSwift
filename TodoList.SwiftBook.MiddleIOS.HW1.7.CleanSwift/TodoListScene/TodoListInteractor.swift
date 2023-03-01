@@ -12,18 +12,29 @@ protocol ITodoListInteractor {
 	func makeRequest(request: TodoList.Model.Request.RequestType)
 }
 
-protocol TodoListDataStore {
+protocol ITodoListDataStore {
 	var login: String? { get set }
 }
 
-class TodoListInteractor: ITodoListInteractor, TodoListDataStore {
+class TodoListInteractor: ITodoListInteractor, ITodoListDataStore {
 	var login: String?
 	var presenter: ITodoListPresenter?
-	var service: TodoListService?
+	var worker: TodoListWorker
+	
+	init(presenter: ITodoListPresenter, worker: TodoListWorker) {
+		self.presenter = presenter
+		self.worker = worker
+	}
 	
 	func makeRequest(request: TodoList.Model.Request.RequestType) {
-		if service == nil {
-			service = TodoListService()
+		switch request {
+		case .getTasks:
+			guard let login = login else { return }
+			guard let tasks = worker.fetchTasks(login: login) else { return }
+			let taskManager = OrderedTaskManager(taskManager: TaskManager())
+			taskManager.addTasks(tasks: tasks)
+			
+			presenter?.presentData(response: .presentTasks(taskManager))
 		}
 	}
 	

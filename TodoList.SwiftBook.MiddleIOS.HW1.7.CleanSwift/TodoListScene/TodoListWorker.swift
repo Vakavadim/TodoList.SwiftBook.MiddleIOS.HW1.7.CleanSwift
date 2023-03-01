@@ -8,6 +8,18 @@
 
 import UIKit
 
-class TodoListService {
+protocol ITodoListWorker {
+	func fetchTasks(login: String) -> [Task]?
+}
 
+class TodoListWorker: ITodoListWorker {
+	var reposotory: ITaskRepository
+	
+	init(reposotory: ITaskRepository) {
+		self.reposotory = reposotory
+	}
+	
+	func fetchTasks(login: String) -> [Task]? {
+		reposotory.getTasks(login: login)
+	}
 }

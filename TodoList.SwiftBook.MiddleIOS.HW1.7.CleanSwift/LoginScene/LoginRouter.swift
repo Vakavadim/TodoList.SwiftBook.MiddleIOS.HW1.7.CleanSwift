@@ -13,12 +13,12 @@ import UIKit
 }
 
 protocol ILoginDataPassing {
-	var dataStore: LoginDataStore? { get }
+	var dataStore: ILoginDataStore? { get }
 }
 
 class LoginRouter: NSObject, ILoginRouter, ILoginDataPassing {
 	weak var viewController: LoginViewController?
-	var dataStore: LoginDataStore?
+	var dataStore: ILoginDataStore?
 	
 	// MARK: Routing
 	func routeToTodoList(segue: UIStoryboardSegue?) {
@@ -39,7 +39,7 @@ class LoginRouter: NSObject, ILoginRouter, ILoginDataPassing {
 	}
 	
 	// MARK: Passing data
-	func passDataToTodoList(source: LoginDataStore, destination: inout TodoListDataStore) {
+	func passDataToTodoList(source: ILoginDataStore, destination: inout ITodoListDataStore) {
 		destination.login = source.login
 	}
 }
