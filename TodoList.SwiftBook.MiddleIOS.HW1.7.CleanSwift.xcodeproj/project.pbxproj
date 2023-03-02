@@ -80,6 +80,7 @@
 		E04A546C29A63DB2001FA636 = {
 			isa = PBXGroup;
 			children = (
+				E05B29A729B1065500AA0F23 /* README.md */,
 				E04A547729A63DB2001FA636 /* TodoList.SwiftBook.MiddleIOS.HW1.7.CleanSwift */,
 				E04A547629A63DB2001FA636 /* Products */,
 			);
@@ -96,7 +97,6 @@
 		E04A547729A63DB2001FA636 /* TodoList.SwiftBook.MiddleIOS.HW1.7.CleanSwift */ = {
 			isa = PBXGroup;
 			children = (
-				E05B29A729B1065500AA0F23 /* README.md */,
 				E04A549A29A63DEF001FA636 /* LoginScene */,
 				E04A54A029A7A11F001FA636 /* TodoListScene */,
 				E04A549D29A63E80001FA636 /* Stroyboards */,
