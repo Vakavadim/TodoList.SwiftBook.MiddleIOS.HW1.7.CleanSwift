@@ -11,6 +11,7 @@ protocol ISectionForTaskManagerAdapter {
 	func taskSectionAndIndex(task: Task) -> (section: Section, index: Int)?
 	func getSectionIndex(section: Section) -> Int
 	func getSection(forIndex index: Int) -> Section
+	func getTasksListTitle() -> String
 }
 
 enum Section: CaseIterable {
@@ -31,10 +32,10 @@ final class SectionForTaskManagerAdapter: ISectionForTaskManagerAdapter {
 	
 	private let sections: [Section] = [.uncompleted, .completed]
 	
-	private let taskManager: ITaskManager
+	private let taskManagerResponse: TodoList.TasksResponse
 	
-	init(taskManager: ITaskManager) {
-		self.taskManager = taskManager
+	init(taskManagerResponse: TodoList.TasksResponse) {
+		self.taskManagerResponse = taskManagerResponse
 	}
 	
 	func getSections() -> [Section] {
@@ -53,9 +54,9 @@ final class SectionForTaskManagerAdapter: ISectionForTaskManagerAdapter {
 	func getTasksForSection(section: Section) -> [Task] {
 		switch section {
 		case .completed:
-			return taskManager.getCompletedTasks()
+			return taskManagerResponse.completedTasks
 		case .uncompleted:
-			return taskManager.getUnDoneTasks()
+			return taskManagerResponse.uncomletedTasks
 		}
 	}
 	
@@ -68,4 +69,9 @@ final class SectionForTaskManagerAdapter: ISectionForTaskManagerAdapter {
 		}
 		return nil
 	}
+	
+	func getTasksListTitle() -> String {
+		"\(taskManagerResponse.login.name)'s ToDoList"
+	}
+	
 }

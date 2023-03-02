@@ -20,7 +20,10 @@ class LoginViewController: UIViewController, ILoginViewController {
 	@IBOutlet weak var textFieldPass: UITextField!
 	@IBAction func loginButtonPress(_ sender: Any) {
 		if let login = textFieldLogin.text, let password = textFieldPass.text {
-			let request = LoginModels.Model.Request(login: login, password: password)
+			let request = LoginModels.Model.Request(
+				login: LoginModels.Login(login),
+				password: LoginModels.Password(password)
+			)
 			interactor?.login(request: request)
 		}
 	}

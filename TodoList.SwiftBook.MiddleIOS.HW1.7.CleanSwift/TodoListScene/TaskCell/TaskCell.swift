@@ -16,7 +16,7 @@ class TaskCell: UITableViewCell {
 	@IBOutlet weak var checkMark: UIImageView!
 	
 
-	var taskData: MainModel.ViewData.Task! {
+	var taskData: TodoList.ViewData.Task! {
 			didSet {
 				setupUI()
 			}

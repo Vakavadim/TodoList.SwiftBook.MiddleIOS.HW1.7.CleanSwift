@@ -40,6 +40,6 @@ class LoginRouter: NSObject, ILoginRouter, ILoginDataPassing {
 	
 	// MARK: Passing data
 	func passDataToTodoList(source: ILoginDataStore, destination: inout ITodoListDataStore) {
-		destination.login = source.login
+		destination.login = source.login?.rawValue
 	}
 }

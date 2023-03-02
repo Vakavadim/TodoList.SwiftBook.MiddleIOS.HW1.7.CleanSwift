@@ -9,29 +9,16 @@
 import UIKit
 
 enum TodoList {
-	
-	enum Model {
-		struct Request {
-			enum RequestType {
-				case getTasks
-			}
-		}
-		struct Response {
-			enum ResponseType {
-				case presentTasks(ITaskManager)
-			}
-		}
-		struct ViewModel {
-			enum ViewModelData {
-				case displayTasks(MainModel.ViewData)
-			}
-		}
-	}
-	
-}
-
-enum MainModel {
+	 
 	struct ViewData {
+		struct TodoListTitle {
+			let rawValue: String
+			
+			init(_ rawValue: String) {
+				self.rawValue = rawValue
+			}
+		}
+		
 		struct RegularTask {
 			let name: String
 			let isDone: Bool
@@ -55,6 +42,36 @@ enum MainModel {
 			let tasks: [Task]
 		}
 		
+		let todoListTitle: TodoListTitle
 		let tasksBySections: [Section]
+	}
+	
+	struct Login {
+		var name: String
+	}
+	
+	struct TasksResponse {
+		let completedTasks: [Task]
+		let uncomletedTasks: [Task]
+		let login: Login
+	}
+	
+	enum Model {
+		struct Request {
+			enum RequestType {
+				case loadTasks
+				case didDoneButtonPressed(IndexPath)
+			}
+		}
+		struct Response {
+			enum ResponseType {
+				case presentTasks(TasksResponse)
+			}
+		}
+		struct ViewModel {
+			enum ViewModelData {
+				case displayTasks(TodoList.ViewData)
+			}
+		}
 	}
 }

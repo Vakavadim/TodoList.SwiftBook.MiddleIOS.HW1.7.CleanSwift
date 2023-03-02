@@ -21,6 +21,8 @@ class TodoListInteractor: ITodoListInteractor, ITodoListDataStore {
 	var presenter: ITodoListPresenter?
 	var worker: TodoListWorker
 	
+	private var taskManager: ITaskManager!
+	
 	init(presenter: ITodoListPresenter, worker: TodoListWorker) {
 		self.presenter = presenter
 		self.worker = worker
@@ -28,13 +30,35 @@ class TodoListInteractor: ITodoListInteractor, ITodoListDataStore {
 	
 	func makeRequest(request: TodoList.Model.Request.RequestType) {
 		switch request {
-		case .getTasks:
+		case .loadTasks:
 			guard let login = login else { return }
 			guard let tasks = worker.fetchTasks(login: login) else { return }
-			let taskManager = OrderedTaskManager(taskManager: TaskManager())
+			taskManager = OrderedTaskManager(taskManager: TaskManager())
 			taskManager.addTasks(tasks: tasks)
 			
-			presenter?.presentData(response: .presentTasks(taskManager))
+			let presenterData = TodoList.TasksResponse(
+				completedTasks: taskManager.getCompletedTasks(),
+				uncomletedTasks: taskManager.getUnDoneTasks(),
+				login: TodoList.Login(name: login))
+			
+			presenter?.presentData(response: .presentTasks(presenterData))
+		case .didDoneButtonPressed(let indexPath):
+			var tasks = [Task]()
+			if indexPath.section == 0 {
+				tasks = taskManager.getUnDoneTasks()
+			} else {
+				tasks = taskManager.getCompletedTasks()
+			}
+			let task = tasks[indexPath.row]
+			taskManager.completeTask(task: task)
+			
+			guard let login = login else { return }
+			let presenterData = TodoList.TasksResponse(
+				completedTasks: taskManager.getCompletedTasks(),
+				uncomletedTasks: taskManager.getUnDoneTasks(),
+				login: TodoList.Login(name: login))
+			
+			presenter?.presentData(response: .presentTasks(presenterData))
 		}
 	}
 	

@@ -10,18 +10,18 @@ import UIKit
 
 public struct LoginDTO {
 	var success: Bool
-	var login: String
+	var login: LoginModels.Login
 	var lastLoginDate: Date
 }
 
 protocol ILoginWorker {
-	func login(login: String, password: String) -> LoginDTO
+	func login(login: LoginModels.Login, password: LoginModels.Password) -> LoginDTO
 }
 
 class LoginWorker: ILoginWorker {
 	
-	func login(login: String, password: String) -> LoginDTO {
-		if login == "Admin" && password == "pa$$32!" {
+	func login(login: LoginModels.Login, password: LoginModels.Password) -> LoginDTO {
+		if login.rawValue == "Admin" && password.rawValue == "pa$$32!" {
 			return LoginDTO(
 				success: true,
 				login: login,

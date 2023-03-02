@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ITodoListView: AnyObject {
-	func displayData(viewData: MainModel.ViewData)
+	func displayData(viewData: TodoList.ViewData)
 }
 
 class TodoListViewController: UIViewController, ITodoListView {
@@ -17,7 +17,10 @@ class TodoListViewController: UIViewController, ITodoListView {
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var titleLabel: UILabel!
 	private let heightForRow: CGFloat = 70
-	private var viewData: MainModel.ViewData = MainModel.ViewData(tasksBySections: [])
+	private var viewData: TodoList.ViewData = TodoList.ViewData(
+		todoListTitle: TodoList.ViewData.TodoListTitle(""),
+		tasksBySections: []
+	)
 	var interactor: ITodoListInteractor?
 	var router: (NSObjectProtocol & ITodoListRouter & ITodoListDataPassing)?
 	
@@ -64,16 +67,15 @@ class TodoListViewController: UIViewController, ITodoListView {
 	override func loadView() {
 		super.loadView()
 		setupTableViewCell()
-		interactor?.makeRequest(request: .getTasks)
+		interactor?.makeRequest(request: .loadTasks)
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		guard let title = router?.dataStore?.login else { return }
-		titleLabel.text = "\(title)'s ToDoList"
+		titleLabel.text = viewData.todoListTitle.rawValue
 	}
 	
-	func displayData(viewData: MainModel.ViewData) {
+	func displayData(viewData: TodoList.ViewData) {
 		self.viewData = viewData
 		
 		DispatchQueue.main.async {
@@ -104,6 +106,21 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 		let taskData = tasks[indexPath.row]
 		cell.taskData = taskData
 		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let title = indexPath.section == 0 ? "Done" : "Undone"
+		let done = UIContextualAction(style: .normal, title: title) { [unowned self] _, _, _ in
+			self.interactor?.makeRequest(request: .didDoneButtonPressed(indexPath))
+
+			DispatchQueue.main.async {
+				tableView.reloadData()
+			}
+		}
+		
+		let swipe = UISwipeActionsConfiguration(actions: [done])
+		swipe.performsFirstActionWithFullSwipe = false
+		return swipe
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -10,10 +10,26 @@ import UIKit
 
 enum LoginModels {
 	
+	struct Login {
+		let rawValue: String
+		
+		init(_ rawValue: String) {
+			self.rawValue = rawValue
+		}
+	}
+
+	struct Password {
+		let rawValue: String
+		
+		init(_ rawValue: String) {
+			self.rawValue = rawValue
+		}
+	}
+	
 	enum Model {
 		struct Request {
-			var login: String
-			var password: String
+			var login: Login
+			var password: Password
 		}
 		struct Response {
 			var success: Bool

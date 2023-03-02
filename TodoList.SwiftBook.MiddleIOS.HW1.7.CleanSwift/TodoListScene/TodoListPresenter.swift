@@ -18,8 +18,8 @@ class TodoListPresenter: ITodoListPresenter {
 	
 	func presentData(response: TodoList.Model.Response.ResponseType) {
 		switch response {
-		case .presentTasks(let taskManager):
-			sectionManager = SectionForTaskManagerAdapter(taskManager: taskManager)
+		case .presentTasks(let loadTasksResponse):
+			sectionManager = SectionForTaskManagerAdapter(taskManagerResponse: loadTasksResponse)
 			let viewData = mapViewData(sectionManager: sectionManager!)
 			
 			viewController?.displayData(viewData: viewData)
@@ -37,10 +37,11 @@ class TodoListPresenter: ITodoListPresenter {
 		return dateFormatter.string(from: date)
 	}
 	
-	private func mapViewData(sectionManager: ISectionForTaskManagerAdapter) -> MainModel.ViewData {
-		var sections = [MainModel.ViewData.Section]()
+	private func mapViewData(sectionManager: ISectionForTaskManagerAdapter) -> TodoList.ViewData {
+		var sections = [TodoList.ViewData.Section]()
+		let todoListTitle = TodoList.ViewData.TodoListTitle(sectionManager.getTasksListTitle())
 		for section in sectionManager.getSections() {
-			let sectionData = MainModel.ViewData.Section(
+			let sectionData = TodoList.ViewData.Section(
 				title: section.title,
 				tasks: mapTasksData(tasks: sectionManager.getTasksForSection(section: section) )
 			)
@@ -48,16 +49,16 @@ class TodoListPresenter: ITodoListPresenter {
 			sections.append(sectionData)
 		}
 		
-		return MainModel.ViewData(tasksBySections: sections)
+		return TodoList.ViewData(todoListTitle: todoListTitle, tasksBySections: sections)
 	}
 	
-	private func mapTasksData(tasks: [Task]) -> [MainModel.ViewData.Task] {
+	private func mapTasksData(tasks: [Task]) -> [TodoList.ViewData.Task] {
 		tasks.map{ mapTaskData(task: $0) }
 	}
 	
-	private func mapTaskData(task: Task) -> MainModel.ViewData.Task {
+	private func mapTaskData(task: Task) -> TodoList.ViewData.Task {
 		if let task = task as? ImportantTask {
-			let result = MainModel.ViewData.ImportantTask(
+			let result = TodoList.ViewData.ImportantTask(
 				name: task.title,
 				isDone: task.completed,
 				isOverdue: task.deadLine < Date(),
@@ -66,7 +67,7 @@ class TodoListPresenter: ITodoListPresenter {
 			)
 			return .importantTask(result)
 		} else {
-			let result = MainModel.ViewData.RegularTask(
+			let result = TodoList.ViewData.RegularTask(
 				name: task.title,
 				isDone: task.completed
 			)

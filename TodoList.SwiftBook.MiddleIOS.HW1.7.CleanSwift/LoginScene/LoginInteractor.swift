@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ILoginDataStore {
-	var login: String? { get set }
+	var login: LoginModels.Login? { get set }
 }
 
 protocol ILoginInteractor {
@@ -17,7 +17,7 @@ protocol ILoginInteractor {
 }
 
 class LoginInteractor: ILoginInteractor, ILoginDataStore {
-	var login: String?
+	var login: LoginModels.Login?
 	
 	private var worker: ILoginWorker
 	private var presenter: ILoginPresenter?
@@ -33,7 +33,7 @@ class LoginInteractor: ILoginInteractor, ILoginDataStore {
 		
 		let response = LoginModels.Model.Response(
 			success: result.success,
-			login: result.login,
+			login: result.login.rawValue,
 			lastLoginDate: result.lastLoginDate
 		)
 		

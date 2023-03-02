@@ -31,7 +31,10 @@ class TaskRepositoryStub: ITaskRepository {
 	]
 	
 	func getTasks(login: String) -> [Task]? {
-		let tasks = tasks[login]
+		guard var tasks = tasks[login] else { return nil }
+		let overdueTask = ImportantTask(title: "Buy Bitcoin in 2014", taskPriority: .medium)
+		overdueTask.deadLine = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
+		tasks.append(overdueTask)
 		return tasks
 	}
 }
